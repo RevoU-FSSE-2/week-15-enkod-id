@@ -19,7 +19,7 @@ db_connection_1.db.connect(function (err) {
     console.log("DB Connected!");
 });
 app.use(body_parser_1.default.json());
-routes.use("/transaction", transaction_route_1.default);
+app.use(transaction_route_1.default);
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

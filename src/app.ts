@@ -18,7 +18,8 @@ db.connect(function (err) {
 });
 
 app.use(bodyParser.json());
-routes.use("/transaction", transactionRoutes);
+
+app.use(transactionRoutes);
 
 
 app.listen(port, () => {
