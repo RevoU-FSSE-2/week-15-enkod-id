@@ -23,9 +23,11 @@ app.use(bodyParser.json());
 
 app.use(cors(corsClientx))
 
-app.options("*", (req: Request, res: Response) => {
-  res.header("Access-Control-Allow-Methods", "GET, POST");
-  res.status(204).end(); // Respond with a 204 No Content status
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://week-15-fe.netlify.app');
+  res.header('Access-Control-Allow-Methods', 'GET, POST');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  next();
 });
 
 app.use(transactionRoutes);
