@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Express, Request, Response, NextFunction } from "express";
 const routes = express.Router();
 import "dotenv/config";
 import bodyParser from "body-parser";
@@ -20,7 +20,14 @@ db.connect(function (err) {
 });
 
 app.use(bodyParser.json());
+
 app.use(cors(corsClientx))
+
+app.options("*", (req: Request, res: Response) => {
+  res.header("Access-Control-Allow-Methods", "GET, POST");
+  res.status(204).end(); // Respond with a 204 No Content status
+});
+
 app.use(transactionRoutes);
 
 
