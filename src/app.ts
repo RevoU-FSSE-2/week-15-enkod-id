@@ -4,6 +4,8 @@ import "dotenv/config";
 import bodyParser from "body-parser";
 import { db } from "./config/db.connection";
 import transactionRoutes from "./routes/transaction.route";
+import cors from "cors"
+import corsClientx from "./middlewares/corsx.middleware";
 
 
 const app = express();
@@ -18,7 +20,7 @@ db.connect(function (err) {
 });
 
 app.use(bodyParser.json());
-
+app.use(cors(corsClientx))
 app.use(transactionRoutes);
 
 
