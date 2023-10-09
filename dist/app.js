@@ -9,6 +9,7 @@ require("dotenv/config");
 const body_parser_1 = __importDefault(require("body-parser"));
 const db_connection_1 = require("./config/db.connection");
 const transaction_route_1 = __importDefault(require("./routes/transaction.route"));
+const helmet_1 = __importDefault(require("helmet"));
 const app = (0, express_1.default)();
 const port = process.env.PORT;
 db_connection_1.db.connect(function (err) {
@@ -19,6 +20,8 @@ db_connection_1.db.connect(function (err) {
     console.log("DB Connected!");
 });
 app.use(body_parser_1.default.json());
+app.use((0, helmet_1.default)());
+app.use(helmet_1.default.frameguard({ action: 'deny' }));
 app.use((req, res, next) => {
     const allowedOrigins = [
         'https://clienty-week15.netlify.app',

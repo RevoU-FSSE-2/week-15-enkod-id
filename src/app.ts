@@ -7,6 +7,7 @@ import transactionRoutes from "./routes/transaction.route";
 import cors from "cors"
 import corsClientx from "./middlewares/corsx.middleware";
 import corsClienty from "./middlewares/corsy.middleware";
+import helmet from "helmet";
 
 
 const app = express();
@@ -21,6 +22,9 @@ db.connect(function (err) {
 });
 
 app.use(bodyParser.json());
+
+app.use(helmet())
+app.use(helmet.frameguard({ action: 'deny' }))
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const allowedOrigins: string[] = [
