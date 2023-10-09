@@ -22,14 +22,25 @@ db.connect(function (err) {
 
 app.use(bodyParser.json());
 
-app.use(cors(corsClientx))
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const allowedOrigins: string[] = [
+    'https://clienty-week15.netlify.app',
+    'https://clinetx-week15.netlify.app',
+  ];
+  const origin: string | undefined = req.headers.origin as string;
 
-app.use(cors(corsClienty))
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', ['https://clienty-week15.netlify.app/','https://clinetx-week15.netlify.app/']);
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    if (origin === 'https://clienty-week15.netlify.app') {
+      res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    } else if (origin === 'https://clinetx-week15.netlify.app') {
+      res.header('Access-Control-Allow-Methods', 'GET, POST');
+    }
+
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  }
+
   next();
 });
 
