@@ -23,15 +23,9 @@ db_connection_1.db.connect(function (err) {
 });
 app.use(body_parser_1.default.json());
 app.use((0, cors_1.default)(corsx_middleware_1.default));
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://clinetx-week15.netlify.app/');
-    res.header('Access-Control-Allow-Methods', 'GET, POST');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    next();
-});
 app.use((0, cors_1.default)(corsy_middleware_1.default));
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://clienty-week15.netlify.app/');
+    res.header('Access-Control-Allow-Origin', ['https://clienty-week15.netlify.app/', 'https://clinetx-week15.netlify.app/']);
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     next();
