@@ -20,8 +20,8 @@ app.use(helmet.frameguard({ action: 'deny' }))
 app.use(helmet.contentSecurityPolicy({
   directives: {
     defaultSrc: ["'self'"],
-    scriptSrc: ["'self'", "'unsafe-inline'"],
-    styleSrc: ["'self'", "'unsafe-inline'"],
+    scriptSrc: ["'self'"],
+    styleSrc: ["'self'"],
     imgSrc: ["'self'"],
     frameSrc: ["'self'"],
     objectSrc: ["'none'"],
