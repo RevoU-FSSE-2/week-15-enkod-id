@@ -31,6 +31,18 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", "'unsafe-inline'"],
+    styleSrc: ["'self'", "'unsafe-inline'"],
+    imgSrc: ["'self'"],
+    frameSrc: ["'self'"],
+    objectSrc: ["'none'"],
+    upgradeInsecureRequests: ["'self'", "https:"]
+  }
+}));
+
 app.use((req: Request, res: Response, next: NextFunction) => {
   const allowedOrigins: string[] = [
     'https://clienty-week15.netlify.app',
