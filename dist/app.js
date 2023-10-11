@@ -12,6 +12,7 @@ const transaction_route_1 = __importDefault(require("./routes/transaction.route"
 const helmet_1 = __importDefault(require("helmet"));
 const app = (0, express_1.default)();
 const port = process.env.PORT;
+app.use((0, helmet_1.default)());
 app.use(helmet_1.default.frameguard({ action: 'deny' }));
 app.use(helmet_1.default.contentSecurityPolicy({
     directives: {
@@ -36,7 +37,6 @@ app.use((req, res, next) => {
     next();
 });
 app.use(body_parser_1.default.json());
-app.use((0, helmet_1.default)());
 app.use((req, res, next) => {
     const allowedOrigins = [
         'https://clienty-week15.netlify.app',

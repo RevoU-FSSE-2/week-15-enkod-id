@@ -13,6 +13,8 @@ import helmet from "helmet";
 const app = express();
 const port = process.env.PORT;
 
+app.use(helmet())
+
 app.use(helmet.frameguard({ action: 'deny' }))
 
 app.use(helmet.contentSecurityPolicy({
@@ -44,7 +46,6 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-app.use(helmet())
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const allowedOrigins: string[] = [
