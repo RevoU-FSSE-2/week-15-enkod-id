@@ -26,17 +26,17 @@ app.use((req, res, next) => {
     res.header('X-Frame-Options', 'DENY');
     next();
 });
-app.use(helmet_1.default.contentSecurityPolicy({
-    directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        imgSrc: ["'self'"],
-        frameSrc: ["'self'"],
-        objectSrc: ["'none'"],
-        upgradeInsecureRequests: ["'self'", "https:"]
-    }
-}));
+// app.use(helmet.contentSecurityPolicy({
+//   directives: {
+//     defaultSrc: ["'self'"],
+//     scriptSrc: ["'self'", "'unsafe-inline'"],
+//     styleSrc: ["'self'", "'unsafe-inline'"],
+//     imgSrc: ["'self'"],
+//     frameSrc: ["'self'"],
+//     objectSrc: ["'none'"],
+//     upgradeInsecureRequests: ["'self'", "https:"]
+//   }
+// }));
 app.use((req, res, next) => {
     const allowedOrigins = [
         'https://clienty-week15.netlify.app',
@@ -47,11 +47,34 @@ app.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', origin);
         if (origin === 'https://clienty-week15.netlify.app') {
             res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+            res.header(helmet_1.default.contentSecurityPolicy({
+                directives: {
+                    defaultSrc: ["'self'"],
+                    scriptSrc: ["'self'", "'unsafe-inline'"],
+                    styleSrc: ["'self'", "'unsafe-inline'"],
+                    imgSrc: ["'self'"],
+                    frameSrc: ["'self'"],
+                    objectSrc: ["'none'"],
+                    upgradeInsecureRequests: ["'self'", "https:"]
+                }
+            }));
         }
         else if (origin === 'https://clinetx-week15.netlify.app') {
             res.header('Access-Control-Allow-Methods', 'GET, POST');
+            res.header(helmet_1.default.contentSecurityPolicy({
+                directives: {
+                    defaultSrc: ["'self'"],
+                    scriptSrc: ["'self'", "'unsafe-inline'"],
+                    styleSrc: ["'self'", "'unsafe-inline'"],
+                    imgSrc: ["'self'"],
+                    frameSrc: ["'self'"],
+                    objectSrc: ["'none'"],
+                    upgradeInsecureRequests: ["'self'", "https:"]
+                }
+            }));
         }
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+        4;
     }
     next();
 });

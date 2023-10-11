@@ -31,17 +31,17 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(helmet.contentSecurityPolicy({
-  directives: {
-    defaultSrc: ["'self'"],
-    scriptSrc: ["'self'", "'unsafe-inline'"],
-    styleSrc: ["'self'", "'unsafe-inline'"],
-    imgSrc: ["'self'"],
-    frameSrc: ["'self'"],
-    objectSrc: ["'none'"],
-    upgradeInsecureRequests: ["'self'", "https:"]
-  }
-}));
+// app.use(helmet.contentSecurityPolicy({
+//   directives: {
+//     defaultSrc: ["'self'"],
+//     scriptSrc: ["'self'", "'unsafe-inline'"],
+//     styleSrc: ["'self'", "'unsafe-inline'"],
+//     imgSrc: ["'self'"],
+//     frameSrc: ["'self'"],
+//     objectSrc: ["'none'"],
+//     upgradeInsecureRequests: ["'self'", "https:"]
+//   }
+// }));
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const allowedOrigins: string[] = [
@@ -49,17 +49,40 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     'https://clinetx-week15.netlify.app',
   ];
   const origin: string | undefined = req.headers.origin as string;
+  
 
   if (allowedOrigins.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
 
     if (origin === 'https://clienty-week15.netlify.app') {
       res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+      res.header(helmet.contentSecurityPolicy({
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'", "'unsafe-inline'"],
+          styleSrc: ["'self'", "'unsafe-inline'"],
+          imgSrc: ["'self'"],
+          frameSrc: ["'self'"],
+          objectSrc: ["'none'"],
+          upgradeInsecureRequests: ["'self'", "https:"]
+        }
+      }));
     } else if (origin === 'https://clinetx-week15.netlify.app') {
       res.header('Access-Control-Allow-Methods', 'GET, POST');
+      res.header(helmet.contentSecurityPolicy({
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'", "'unsafe-inline'"],
+          styleSrc: ["'self'", "'unsafe-inline'"],
+          imgSrc: ["'self'"],
+          frameSrc: ["'self'"],
+          objectSrc: ["'none'"],
+          upgradeInsecureRequests: ["'self'", "https:"]
+        }
+      }));
     }
 
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');4
   }
 
   next();
