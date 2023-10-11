@@ -13,6 +13,21 @@ import helmet from "helmet";
 const app = express();
 const port = process.env.PORT;
 
+app.use(helmet.frameguard({ action: 'deny' }))
+
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", "'unsafe-inline'"],
+    styleSrc: ["'self'", "'unsafe-inline'"],
+    imgSrc: ["'self'"],
+    frameSrc: ["'self'"],
+    objectSrc: ["'none'"],
+    upgradeInsecureRequests: ["'self'", "https:"]
+  }
+}));
+
+
 db.connect(function (err) {
   if (err) {
     console.log(err)
@@ -21,27 +36,15 @@ db.connect(function (err) {
   console.log("DB Connected!");
 });
 
-app.use(bodyParser.json());
-
-app.use(helmet())
-app.use(helmet.frameguard({ action: 'deny' }))
 
 app.use((req, res, next) => {
   res.header('X-Frame-Options', 'DENY');
   next();
 });
 
-// app.use(helmet.contentSecurityPolicy({
-//   directives: {
-//     defaultSrc: ["'self'"],
-//     scriptSrc: ["'self'", "'unsafe-inline'"],
-//     styleSrc: ["'self'", "'unsafe-inline'"],
-//     imgSrc: ["'self'"],
-//     frameSrc: ["'self'"],
-//     objectSrc: ["'none'"],
-//     upgradeInsecureRequests: ["'self'", "https:"]
-//   }
-// }));
+app.use(bodyParser.json());
+
+app.use(helmet())
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const allowedOrigins: string[] = [
@@ -56,30 +59,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
     if (origin === 'https://clienty-week15.netlify.app') {
       res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-      res.header(helmet.contentSecurityPolicy({
-        directives: {
-          defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", "'unsafe-inline'"],
-          styleSrc: ["'self'", "'unsafe-inline'"],
-          imgSrc: ["'self'"],
-          frameSrc: ["'self'"],
-          objectSrc: ["'none'"],
-          upgradeInsecureRequests: ["'self'", "https:"]
-        }
-      }));
     } else if (origin === 'https://clinetx-week15.netlify.app') {
       res.header('Access-Control-Allow-Methods', 'GET, POST');
-      res.header(helmet.contentSecurityPolicy({
-        directives: {
-          defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", "'unsafe-inline'"],
-          styleSrc: ["'self'", "'unsafe-inline'"],
-          imgSrc: ["'self'"],
-          frameSrc: ["'self'"],
-          objectSrc: ["'none'"],
-          upgradeInsecureRequests: ["'self'", "https:"]
-        }
-      }));
     }
 
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');4

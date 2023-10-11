@@ -12,6 +12,18 @@ const transaction_route_1 = __importDefault(require("./routes/transaction.route"
 const helmet_1 = __importDefault(require("helmet"));
 const app = (0, express_1.default)();
 const port = process.env.PORT;
+app.use(helmet_1.default.frameguard({ action: 'deny' }));
+app.use(helmet_1.default.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'"],
+        frameSrc: ["'self'"],
+        objectSrc: ["'none'"],
+        upgradeInsecureRequests: ["'self'", "https:"]
+    }
+}));
 db_connection_1.db.connect(function (err) {
     if (err) {
         console.log(err);
@@ -19,24 +31,12 @@ db_connection_1.db.connect(function (err) {
     }
     console.log("DB Connected!");
 });
-app.use(body_parser_1.default.json());
-app.use((0, helmet_1.default)());
-app.use(helmet_1.default.frameguard({ action: 'deny' }));
 app.use((req, res, next) => {
     res.header('X-Frame-Options', 'DENY');
     next();
 });
-// app.use(helmet.contentSecurityPolicy({
-//   directives: {
-//     defaultSrc: ["'self'"],
-//     scriptSrc: ["'self'", "'unsafe-inline'"],
-//     styleSrc: ["'self'", "'unsafe-inline'"],
-//     imgSrc: ["'self'"],
-//     frameSrc: ["'self'"],
-//     objectSrc: ["'none'"],
-//     upgradeInsecureRequests: ["'self'", "https:"]
-//   }
-// }));
+app.use(body_parser_1.default.json());
+app.use((0, helmet_1.default)());
 app.use((req, res, next) => {
     const allowedOrigins = [
         'https://clienty-week15.netlify.app',
@@ -47,31 +47,9 @@ app.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', origin);
         if (origin === 'https://clienty-week15.netlify.app') {
             res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-            res.header(helmet_1.default.contentSecurityPolicy({
-                directives: {
-                    defaultSrc: ["'self'"],
-                    scriptSrc: ["'self'", "'unsafe-inline'"],
-                    styleSrc: ["'self'", "'unsafe-inline'"],
-                    imgSrc: ["'self'"],
-                    frameSrc: ["'self'"],
-                    objectSrc: ["'none'"],
-                    upgradeInsecureRequests: ["'self'", "https:"]
-                }
-            }));
         }
         else if (origin === 'https://clinetx-week15.netlify.app') {
             res.header('Access-Control-Allow-Methods', 'GET, POST');
-            res.header(helmet_1.default.contentSecurityPolicy({
-                directives: {
-                    defaultSrc: ["'self'"],
-                    scriptSrc: ["'self'", "'unsafe-inline'"],
-                    styleSrc: ["'self'", "'unsafe-inline'"],
-                    imgSrc: ["'self'"],
-                    frameSrc: ["'self'"],
-                    objectSrc: ["'none'"],
-                    upgradeInsecureRequests: ["'self'", "https:"]
-                }
-            }));
         }
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
         4;
