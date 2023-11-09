@@ -2,7 +2,7 @@
 
 # Assignment Week 15
 
-Deployment = https://week-15-jokosetiawan-dev-production.up.railway.app
+
 ## Description
 
 This project focuses on implementing Cross-Origin Resource Sharing (CORS), web security, X-Frame-Options, and Content Security Policy (CSP) to enhance the security and reliability of the backend.
@@ -11,9 +11,6 @@ This project focuses on implementing Cross-Origin Resource Sharing (CORS), web s
 
 - **CORS Implementation:** Securely configure Cross-Origin Resource Sharing to control which origins can access your API.
 
-    Frontend:
-    Client X = https://clinetx-week15.netlify.app/
-    Client Y = https://clienty-week15.netlify.app/
 
 - **Web Security:** Implement security measures to protect your backend from common web vulnerabilities.
 
@@ -24,8 +21,7 @@ This project focuses on implementing Cross-Origin Resource Sharing (CORS), web s
 ## Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/RevoU-FSSE-2/week-15-JokoSetiawan-dev
+
 
 # Navigate to the project directory
 cd your-backend-project
